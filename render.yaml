@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: primedrive
+    env: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: RESEND_API_KEY
+        sync: false
+      - key: FROM_EMAIL
+        value: noreply@primedrive.de
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        fromService:
+          type: web
+          name: primedrive
+          property: host
+      - key: OPENCAGE_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
