@@ -67,10 +67,13 @@ export async function sendBookingConfirmation(booking: Booking) {
     <a class="btn" href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://primedrive.de'}/track/${booking.id}">Fahrt verfolgen →</a>
   `)
 
-  await Promise.all([
-    sendEmail(booking.passengerEmail, `✅ PrimeDrive – Buchung ${booking.id} bestätigt`, html),
-    sendEmail(ADMIN_EMAIL, `[Admin] Neue Buchung: ${booking.id} – ${booking.passengerName}`, html),
-  ])
+  const recipients = [ADMIN_EMAIL]
+  if (booking.passengerEmail !== ADMIN_EMAIL) {
+    recipients.push(booking.passengerEmail)
+  }
+  await Promise.allSettled(
+    recipients.map(to => sendEmail(to, `✅ PrimeDrive – Buchung ${booking.id} bestätigt`, html))
+  )
 }
 
 export async function sendCancellationEmail(booking: Booking, reason?: string) {
