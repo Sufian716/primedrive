@@ -20,7 +20,7 @@ export default function BookingClient() {
   const [pickup, setPickup] = useState<Location | null>(null)
   const [dropoff, setDropoff] = useState<Location | null>(null)
   const [rideClass, setRideClass] = useState<RideClass>('economy')
-  const [scheduledAt, setScheduledAt] = useState('')
+  const [scheduledAt, setScheduledAt] = useState(() => new Date().toISOString().slice(0, 16))
   const [passengerName, setPassengerName] = useState('')
   const [passengerEmail, setPassengerEmail] = useState('')
   const [passengerPhone, setPassengerPhone] = useState('')
@@ -209,7 +209,7 @@ export default function BookingClient() {
             <p className="text-zinc-400 text-sm mb-6">Bestätigung wurde an <strong className="text-white">{passengerEmail}</strong> gesendet.</p>
             <div className="space-y-2">
               <Button onClick={() => router.push(`/track/${bookingId}`)} className="w-full bg-white hover:bg-zinc-200 text-black font-bold rounded-2xl h-12">Fahrt verfolgen →</Button>
-              <Button onClick={() => router.push('/')} variant="outline" className="w-full rounded-2xl h-12 border-zinc-700 text-white hover:bg-zinc-900">Zurück zur Startseite</Button>
+              <button onClick={() => router.push('/')} className="w-full rounded-2xl h-12 border border-zinc-700 text-zinc-300 hover:bg-zinc-900 transition-colors text-sm font-medium">Zurück zur Startseite</button>
             </div>
           </div>
         )}
