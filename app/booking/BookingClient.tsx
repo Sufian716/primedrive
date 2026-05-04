@@ -60,7 +60,15 @@ export default function BookingClient() {
         body: JSON.stringify({ pickup, dropoff, rideClass, scheduledAt, passengerName, passengerEmail, passengerPhone, passengers, luggage, flightNumber, flightTime, paymentMethod, notes }),
       })
       const data = await res.json()
-      if (data.id) { setBookingId(data.id); setStep(4) }
+      if (data.id) {
+        setBookingId(data.id)
+        setStep(4)
+        try {
+          const saved = JSON.parse(localStorage.getItem('pd_bookings') ?? '[]')
+          saved.unshift({ id: data.id, passengerName, pickup: pickup?.address, dropoff: dropoff?.address, scheduledAt, status: data.status, price: data.price })
+          localStorage.setItem('pd_bookings', JSON.stringify(saved.slice(0, 20)))
+        } catch {}
+      }
     } finally {
       setLoading(false)
     }

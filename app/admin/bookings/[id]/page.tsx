@@ -78,10 +78,10 @@ export default function AdminBookingDetail({ params }: { params: Promise<{ id: s
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
-        <Link href="/admin" className="p-1"><ArrowLeft className="w-5 h-5 text-gray-700" /></Link>
+      <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+        <Link href="/admin" className="p-1"><ArrowLeft className="w-5 h-5 text-white" /></Link>
         <div>
-          <div className="font-semibold text-gray-900 text-sm">Buchung {booking.id}</div>
+          <div className="font-semibold text-white text-sm">Buchung {booking.id}</div>
           <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${STATUS_COLORS[booking.status]}`}>
             {STATUS_LABELS[booking.status]}
           </span>
@@ -96,7 +96,6 @@ export default function AdminBookingDetail({ params }: { params: Promise<{ id: s
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
             <h3 className="font-semibold text-gray-900">Aktionen</h3>
 
-            {/* Driver assignment (show when confirming) */}
             {booking.status === 'pending' && (
               <div className="grid grid-cols-1 gap-2">
                 <input value={driverName} onChange={e => setDriverName(e.target.value)} placeholder="Fahrername"
