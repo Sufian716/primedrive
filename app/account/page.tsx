@@ -24,8 +24,21 @@ export default function AccountPage() {
 
   useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem('pd_bookings') ?? '[]')
+      const saved: SavedBooking[] = JSON.parse(localStorage.getItem('pd_bookings') ?? '[]')
       setRecentBookings(saved.slice(0, 5))
+      // Refresh statuses from API
+      saved.slice(0, 5).forEach(b => {
+        fetch(`/api/bookings/${b.id}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.id && data.status !== b.status) {
+              setRecentBookings(prev => prev.map(x => x.id === data.id ? { ...x, status: data.status } : x))
+              const all: SavedBooking[] = JSON.parse(localStorage.getItem('pd_bookings') ?? '[]')
+              localStorage.setItem('pd_bookings', JSON.stringify(all.map(x => x.id === data.id ? { ...x, status: data.status } : x)))
+            }
+          })
+          .catch(() => {})
+      })
     } catch {}
   }, [])
 

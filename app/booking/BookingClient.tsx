@@ -32,6 +32,7 @@ export default function BookingClient() {
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(false)
   const [bookingId, setBookingId] = useState('')
+  const [bookingError, setBookingError] = useState('')
 
   useEffect(() => {
     const type = searchParams.get('type')
@@ -53,6 +54,7 @@ export default function BookingClient() {
 
   const handleBook = async () => {
     setLoading(true)
+    setBookingError('')
     try {
       const res = await fetch('/api/bookings', {
         method: 'POST',
@@ -68,7 +70,11 @@ export default function BookingClient() {
           saved.unshift({ id: data.id, passengerName, pickup: pickup?.address, dropoff: dropoff?.address, scheduledAt, status: data.status, price: data.price })
           localStorage.setItem('pd_bookings', JSON.stringify(saved.slice(0, 20)))
         } catch {}
+      } else {
+        setBookingError(data.error ?? 'Buchung fehlgeschlagen. Bitte erneut versuchen.')
       }
+    } catch {
+      setBookingError('Verbindungsfehler. Bitte erneut versuchen.')
     } finally {
       setLoading(false)
     }
@@ -93,7 +99,7 @@ export default function BookingClient() {
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 py-5 space-y-4">
+      <div className="max-w-lg mx-auto px-4 py-5 pb-8 space-y-4">
         {/* STEP 0: Route */}
         {step === 0 && (
           <>
@@ -211,6 +217,12 @@ export default function BookingClient() {
               <Button onClick={() => router.push(`/track/${bookingId}`)} className="w-full bg-white hover:bg-zinc-200 text-black font-bold rounded-2xl h-12">Fahrt verfolgen →</Button>
               <button onClick={() => router.push('/')} className="w-full rounded-2xl h-12 border border-zinc-700 text-zinc-300 hover:bg-zinc-900 transition-colors text-sm font-medium">Zurück zur Startseite</button>
             </div>
+          </div>
+        )}
+
+        {bookingError && (
+          <div className="bg-red-950 border border-red-800 rounded-2xl px-4 py-3 text-red-400 text-sm text-center">
+            {bookingError}
           </div>
         )}
 

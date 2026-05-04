@@ -68,7 +68,7 @@ export default function Home() {
       </div>
 
       {/* Promo */}
-      <div className="px-5 mt-5 max-w-lg mx-auto w-full">
+      <div className="px-5 mt-5 mb-6 max-w-lg mx-auto w-full">
         <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-4 flex items-center gap-3">
           <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shrink-0">🎁</div>
           <div>

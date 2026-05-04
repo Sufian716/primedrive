@@ -37,11 +37,24 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
         <span className="font-semibold text-white">Fahrt {id}</span>
       </div>
 
-      {loading && <div className="flex items-center justify-center h-64 text-zinc-500">Lädt...</div>}
-      {error && <div className="max-w-lg mx-auto px-4 py-8 text-center text-red-400">{error}</div>}
+      {loading && (
+        <div className="flex items-center justify-center h-64">
+          <div className="text-zinc-500 text-sm">Lädt...</div>
+        </div>
+      )}
+      {error && (
+        <div className="max-w-lg mx-auto px-4 py-12 text-center">
+          <div className="text-5xl mb-4">🔍</div>
+          <h2 className="text-white font-bold text-lg mb-2">Buchung nicht gefunden</h2>
+          <p className="text-zinc-500 text-sm mb-6">Die ID <span className="font-mono text-zinc-300">{id}</span> konnte keiner Buchung zugeordnet werden.</p>
+          <Link href="/track" className="inline-flex items-center gap-2 bg-white text-black font-bold px-5 py-3 rounded-2xl text-sm hover:bg-zinc-200 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Neue Suche
+          </Link>
+        </div>
+      )}
 
       {booking && (
-        <div className="max-w-lg mx-auto px-4 py-4 space-y-4">
+        <div className="max-w-lg mx-auto px-4 py-4 pb-8 space-y-4">
           {/* Map */}
           <MapView pickup={booking.pickup} dropoff={booking.dropoff} height="220px" />
 

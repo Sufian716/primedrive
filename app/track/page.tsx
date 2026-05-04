@@ -24,6 +24,7 @@ export default function TrackPage() {
           <input
             value={id}
             onChange={e => setId(e.target.value.toUpperCase())}
+            onKeyDown={e => e.key === 'Enter' && id && router.push(`/track/${id}`)}
             placeholder="PD-..."
             className="w-full h-12 px-4 rounded-xl border border-zinc-700 text-sm focus:outline-none focus:border-white bg-zinc-800 text-white placeholder:text-zinc-500 font-mono mb-3"
           />

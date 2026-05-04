@@ -13,7 +13,7 @@ interface Props {
   showLocate?: boolean
 }
 
-export function AddressInput({ label, value, onChange, placeholder, iconColor = 'text-gray-400', showLocate = false }: Props) {
+export function AddressInput({ label, value, onChange, placeholder, iconColor = 'text-zinc-400', showLocate = false }: Props) {
   const [query, setQuery] = useState(value?.address ?? '')
   const [results, setResults] = useState<Location[]>([])
   const [open, setOpen] = useState(false)
