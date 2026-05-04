@@ -16,13 +16,14 @@ export function BottomNav() {
   if (path.startsWith('/admin')) return null
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950 border-t border-zinc-800">
       <div className="flex items-center justify-around py-2 px-2 max-w-lg mx-auto">
         {links.map(({ href, label, icon: Icon }) => {
           const active = href === '/' ? path === '/' : path.startsWith(href)
           return (
-            <Link key={href} href={href} className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-colors ${active ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}>
-              <Icon className={`w-5 h-5 ${active ? 'fill-blue-100' : ''}`} />
+            <Link key={href} href={href}
+              className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-colors ${active ? 'text-white' : 'text-zinc-600 hover:text-zinc-400'}`}>
+              <Icon className="w-5 h-5" />
               <span className="text-xs font-medium">{label}</span>
             </Link>
           )

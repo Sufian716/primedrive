@@ -31,14 +31,14 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
   }, [booking, id])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
-        <Link href="/track" className="p-1"><ArrowLeft className="w-5 h-5 text-gray-700" /></Link>
-        <span className="font-semibold text-gray-900">Fahrt {id}</span>
+    <div className="min-h-screen bg-black">
+      <div className="bg-zinc-950 border-b border-zinc-800 px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+        <Link href="/track" className="p-1"><ArrowLeft className="w-5 h-5 text-zinc-300" /></Link>
+        <span className="font-semibold text-white">Fahrt {id}</span>
       </div>
 
-      {loading && <div className="flex items-center justify-center h-64 text-gray-400">Lädt...</div>}
-      {error && <div className="max-w-lg mx-auto px-4 py-8 text-center text-red-500">{error}</div>}
+      {loading && <div className="flex items-center justify-center h-64 text-zinc-500">Lädt...</div>}
+      {error && <div className="max-w-lg mx-auto px-4 py-8 text-center text-red-400">{error}</div>}
 
       {booking && (
         <div className="max-w-lg mx-auto px-4 py-4 space-y-4">
@@ -46,9 +46,9 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
           <MapView pickup={booking.pickup} dropoff={booking.dropoff} height="220px" />
 
           {/* Status */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-semibold text-gray-900">Status</span>
+              <span className="font-semibold text-white">Status</span>
               <span className={`px-3 py-1 rounded-full text-xs font-semibold ${STATUS_COLORS[booking.status]}`}>
                 {STATUS_LABELS[booking.status]}
               </span>
@@ -62,8 +62,8 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
                 <div className="flex items-center gap-1 mb-3">
                   {steps.map((s, i) => (
                     <div key={s} className="flex items-center gap-1 flex-1 last:flex-none">
-                      <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${i <= cur ? 'bg-blue-600' : 'bg-gray-200'}`} />
-                      {i < steps.length - 1 && <div className={`flex-1 h-0.5 ${i < cur ? 'bg-blue-600' : 'bg-gray-200'}`} />}
+                      <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${i <= cur ? 'bg-white' : 'bg-zinc-700'}`} />
+                      {i < steps.length - 1 && <div className={`flex-1 h-0.5 ${i < cur ? 'bg-white' : 'bg-zinc-700'}`} />}
                     </div>
                   ))}
                 </div>
@@ -71,16 +71,16 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
             })()}
 
             {booking.driverName && (
-              <div className="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+              <div className="flex items-center justify-between bg-zinc-800 rounded-xl p-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-lg">👤</div>
+                  <div className="w-10 h-10 bg-zinc-700 rounded-full flex items-center justify-center text-lg">👤</div>
                   <div>
-                    <div className="font-semibold text-gray-900 text-sm">{booking.driverName}</div>
-                    <div className="text-xs text-gray-400">{booking.driverPlate}</div>
+                    <div className="font-semibold text-white text-sm">{booking.driverName}</div>
+                    <div className="text-xs text-zinc-400">{booking.driverPlate}</div>
                   </div>
                 </div>
                 {booking.driverPhone && (
-                  <a href={`tel:${booking.driverPhone}`} className="bg-blue-600 text-white p-2.5 rounded-xl">
+                  <a href={`tel:${booking.driverPhone}`} className="bg-white text-black p-2.5 rounded-xl">
                     <Phone className="w-4 h-4" />
                   </a>
                 )}
@@ -88,16 +88,16 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
             )}
 
             {booking.driverEta && !['completed', 'arrived'].includes(booking.status) && (
-              <div className="flex items-center gap-2 text-sm text-blue-700 mt-2">
+              <div className="flex items-center gap-2 text-sm text-zinc-300 mt-2">
                 <Clock className="w-4 h-4" />
-                Ankunft in ca. <strong>{booking.driverEta} Minuten</strong>
+                Ankunft in ca. <strong className="text-white">{booking.driverEta} Minuten</strong>
               </div>
             )}
           </div>
 
           {/* Trip details */}
-          <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-2">
-            <h3 className="font-semibold text-gray-900 mb-2">Fahrtdetails</h3>
+          <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 space-y-2">
+            <h3 className="font-semibold text-white mb-2">Fahrtdetails</h3>
             {[
               { label: 'Abholung', value: booking.pickup.address },
               { label: 'Ziel', value: booking.dropoff.address },
@@ -107,8 +107,8 @@ export default function TrackDetailPage({ params }: { params: Promise<{ id: stri
               { label: 'Preis', value: `${booking.price.toFixed(2)} €` },
             ].map(({ label, value }) => (
               <div key={label} className="flex justify-between text-sm">
-                <span className="text-gray-500">{label}</span>
-                <span className="text-gray-900 text-right max-w-52 truncate">{value}</span>
+                <span className="text-zinc-500">{label}</span>
+                <span className="text-white text-right max-w-52 truncate">{value}</span>
               </div>
             ))}
           </div>

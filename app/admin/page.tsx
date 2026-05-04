@@ -1,14 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Car, Clock, CheckCircle, XCircle, TrendingUp, Users } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Car, Clock, CheckCircle, TrendingUp, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import type { Booking } from '@/types'
 import { STATUS_LABELS, STATUS_COLORS } from '@/types'
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
+
+  const handleLogout = async () => {
+    await fetch('/api/admin/login', { method: 'DELETE' })
+    router.push('/admin/login')
+  }
 
   const load = () => {
     fetch('/api/admin/bookings')
@@ -39,9 +46,14 @@ export default function AdminDashboard() {
             </div>
             <div className="text-blue-200 text-xs">Fahrtenverwaltung</div>
           </div>
-          <button onClick={load} className="bg-blue-500 hover:bg-blue-400 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-            Aktualisieren
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={load} className="bg-blue-500 hover:bg-blue-400 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
+              Aktualisieren
+            </button>
+            <button onClick={handleLogout} className="bg-blue-900 hover:bg-blue-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
+              <LogOut className="w-4 h-4" />Abmelden
+            </button>
+          </div>
         </div>
       </div>
 

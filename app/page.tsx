@@ -1,86 +1,79 @@
 import Link from "next/link"
-import { Car, MapPin, Shield, Clock } from "lucide-react"
+import { Car, MapPin, ChevronRight } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-black flex flex-col">
+      {/* Header */}
+      <div className="px-5 pt-12 pb-2 max-w-lg mx-auto w-full">
+        <span className="text-white text-2xl font-black tracking-tight">PrimeDrive</span>
+      </div>
+
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-500 px-5 pt-14 pb-10 text-white">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-2 mb-6">
-            <Car className="w-7 h-7" />
-            <span className="text-2xl font-extrabold tracking-tight">PrimeDrive</span>
+      <div className="px-5 pt-8 pb-10 max-w-lg mx-auto w-full">
+        <h1 className="text-white text-4xl font-black leading-tight mb-2">
+          Wohin<br />soll es gehen?
+        </h1>
+        <p className="text-zinc-400 text-sm mb-8">
+          Pünktlich. Zuverlässig. Überall in Frankfurt.
+        </p>
+
+        <Link
+          href="/booking"
+          className="flex items-center gap-3 bg-white text-black font-bold px-5 py-4 rounded-2xl text-base w-full hover:bg-zinc-100 active:scale-95 transition-all"
+        >
+          <div className="bg-black rounded-xl p-2">
+            <Car className="w-5 h-5 text-white" />
           </div>
-          <h1 className="text-3xl font-bold leading-tight mb-3">
-            Dein zuverlässiger Fahrservice
-          </h1>
-          <p className="text-blue-100 text-base mb-8">
-            Pünktlich zum Flughafen Frankfurt — und überall sonst hin.
-          </p>
-          <Link
-            href="/booking"
-            className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-6 py-4 rounded-2xl text-base shadow-lg hover:bg-blue-50 transition-colors w-full justify-center"
-          >
-            <Car className="w-5 h-5" />
-            Jetzt Fahrt buchen
-          </Link>
-        </div>
+          <span>Fahrt buchen</span>
+          <ChevronRight className="w-5 h-5 ml-auto text-zinc-400" />
+        </Link>
       </div>
 
       {/* Quick actions */}
-      <div className="max-w-lg mx-auto w-full px-4 -mt-5">
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-          <Link href="/booking?type=airport" className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
-            <div className="bg-blue-100 p-2.5 rounded-xl">✈️</div>
-            <div>
-              <div className="font-semibold text-gray-900 text-sm">Zum Flughafen</div>
-              <div className="text-xs text-gray-400">Frankfurt FRA · Terminal 1 & 2</div>
-            </div>
-            <span className="ml-auto text-gray-300 text-lg">›</span>
-          </Link>
-          <Link href="/booking?type=city" className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
-            <div className="bg-green-100 p-2.5 rounded-xl">🏙️</div>
-            <div>
-              <div className="font-semibold text-gray-900 text-sm">Stadttransfer</div>
-              <div className="text-xs text-gray-400">Frankfurt & Umgebung</div>
-            </div>
-            <span className="ml-auto text-gray-300 text-lg">›</span>
-          </Link>
-          <Link href="/track" className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50">
-            <div className="bg-purple-100 p-2.5 rounded-xl">
-              <MapPin className="w-5 h-5 text-purple-600" />
-            </div>
-            <div>
-              <div className="font-semibold text-gray-900 text-sm">Fahrt verfolgen</div>
-              <div className="text-xs text-gray-400">Buchungs-ID eingeben</div>
-            </div>
-            <span className="ml-auto text-gray-300 text-lg">›</span>
-          </Link>
-        </div>
-      </div>
+      <div className="px-5 max-w-lg mx-auto w-full space-y-2">
+        <p className="text-zinc-500 text-xs font-semibold uppercase tracking-widest mb-3">Schnellzugriff</p>
 
-      {/* Features */}
-      <div className="max-w-lg mx-auto w-full px-4 mt-6 grid grid-cols-3 gap-3">
-        {[
-          { icon: <Clock className="w-5 h-5 text-blue-600" />, label: 'Pünktlich', sub: 'Garantiert' },
-          { icon: <Shield className="w-5 h-5 text-green-600" />, label: 'Sicher', sub: 'Geprüfte Fahrer' },
-          { icon: <Car className="w-5 h-5 text-purple-600" />, label: '24/7', sub: 'Verfügbar' },
-        ].map((f) => (
-          <div key={f.label} className="bg-white rounded-2xl p-3 text-center shadow-sm border border-gray-100">
-            <div className="flex justify-center mb-1">{f.icon}</div>
-            <div className="font-semibold text-gray-900 text-xs">{f.label}</div>
-            <div className="text-xs text-gray-400">{f.sub}</div>
+        <Link href="/booking?type=airport"
+          className="flex items-center gap-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-4 hover:bg-zinc-800 active:scale-95 transition-all">
+          <div className="w-11 h-11 bg-zinc-800 rounded-xl flex items-center justify-center text-xl">✈️</div>
+          <div>
+            <div className="font-semibold text-white text-sm">Zum Flughafen</div>
+            <div className="text-xs text-zinc-500">Frankfurt FRA · Terminal 1 & 2</div>
           </div>
-        ))}
+          <ChevronRight className="w-4 h-4 ml-auto text-zinc-600" />
+        </Link>
+
+        <Link href="/booking?type=city"
+          className="flex items-center gap-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-4 hover:bg-zinc-800 active:scale-95 transition-all">
+          <div className="w-11 h-11 bg-zinc-800 rounded-xl flex items-center justify-center text-xl">🏙️</div>
+          <div>
+            <div className="font-semibold text-white text-sm">Stadttransfer</div>
+            <div className="text-xs text-zinc-500">Frankfurt & Umgebung</div>
+          </div>
+          <ChevronRight className="w-4 h-4 ml-auto text-zinc-600" />
+        </Link>
+
+        <Link href="/track"
+          className="flex items-center gap-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-4 hover:bg-zinc-800 active:scale-95 transition-all">
+          <div className="w-11 h-11 bg-zinc-800 rounded-xl flex items-center justify-center">
+            <MapPin className="w-5 h-5 text-zinc-300" />
+          </div>
+          <div>
+            <div className="font-semibold text-white text-sm">Fahrt verfolgen</div>
+            <div className="text-xs text-zinc-500">Buchungs-ID eingeben</div>
+          </div>
+          <ChevronRight className="w-4 h-4 ml-auto text-zinc-600" />
+        </Link>
       </div>
 
       {/* Promo */}
-      <div className="max-w-lg mx-auto w-full px-4 mt-4">
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 flex items-center gap-3">
-          <span className="text-2xl">🎁</span>
+      <div className="px-5 mt-5 max-w-lg mx-auto w-full">
+        <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-4 flex items-center gap-3">
+          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shrink-0">🎁</div>
           <div>
-            <div className="font-semibold text-amber-900 text-sm">Erste Fahrt 10% günstiger</div>
-            <div className="text-xs text-amber-700">Code: WELCOME10 bei der Buchung eingeben</div>
+            <div className="font-semibold text-white text-sm">Erste Fahrt 10% günstiger</div>
+            <div className="text-xs text-zinc-400">Code: <span className="text-white font-mono">WELCOME10</span></div>
           </div>
         </div>
       </div>

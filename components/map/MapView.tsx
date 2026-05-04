@@ -30,7 +30,7 @@ export function MapView({ pickup, dropoff, height = '240px' }: Props) {
     : `https://www.openstreetmap.org/export/embed.html?mlat=${center.lat}&mlon=${center.lng}&zoom=${zoom}&layer=mapnik`
 
   return (
-    <div className="w-full rounded-2xl overflow-hidden border border-gray-200" style={{ height }}>
+    <div className="w-full rounded-2xl overflow-hidden border border-zinc-700" style={{ height }}>
       <iframe
         src={src}
         width="100%"
@@ -47,12 +47,12 @@ export function MapView({ pickup, dropoff, height = '240px' }: Props) {
 export function MapPlaceholder({ height = '200px' }: { height?: string }) {
   return (
     <div
-      className="w-full rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100 flex items-center justify-center"
+      className="w-full rounded-2xl bg-zinc-900 border border-zinc-700 flex items-center justify-center"
       style={{ height }}
     >
       <div className="text-center">
         <div className="text-4xl mb-2">🗺️</div>
-        <p className="text-sm text-gray-500">Karte erscheint nach Adresseingabe</p>
+        <p className="text-sm text-zinc-500">Karte erscheint nach Adresseingabe</p>
       </div>
     </div>
   )

@@ -98,13 +98,13 @@ export function AddressInput({ label, value, onChange, placeholder, iconColor = 
   return (
     <div className="relative" ref={ref}>
       <div className="flex items-center justify-between mb-1">
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{label}</label>
+        <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wide">{label}</label>
         {showLocate && (
           <button
             type="button"
             onClick={handleLocate}
             disabled={locating}
-            className="flex items-center gap-1 text-xs text-blue-600 font-medium hover:text-blue-800 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-1 text-xs text-white font-medium hover:text-zinc-300 disabled:opacity-50 transition-colors"
           >
             {locating
               ? <><Loader2 className="w-3 h-3 animate-spin" />Wird ermittelt...</>
@@ -121,7 +121,7 @@ export function AddressInput({ label, value, onChange, placeholder, iconColor = 
           onChange={handleInput}
           onFocus={() => results.length > 0 && setOpen(true)}
           placeholder={placeholder ?? 'Adresse eingeben...'}
-          className="w-full pl-9 pr-3 h-12 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-blue-500 bg-white"
+          className="w-full pl-9 pr-3 h-12 rounded-xl border border-zinc-700 text-sm focus:outline-none focus:border-white bg-zinc-900 text-white placeholder:text-zinc-500"
         />
       </div>
 
@@ -130,15 +130,15 @@ export function AddressInput({ label, value, onChange, placeholder, iconColor = 
       )}
 
       {open && results.length > 0 && (
-        <div className="absolute z-50 top-full mt-1 w-full bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+        <div className="absolute z-50 top-full mt-1 w-full bg-zinc-900 rounded-xl shadow-xl border border-zinc-700 overflow-hidden">
           {results.map((loc, i) => (
             <button
               key={i}
               onClick={() => select(loc)}
-              className="w-full flex items-start gap-3 px-4 py-3 hover:bg-blue-50 text-left transition-colors border-b border-gray-50 last:border-0"
+              className="w-full flex items-start gap-3 px-4 py-3 hover:bg-zinc-800 text-left transition-colors border-b border-zinc-800 last:border-0"
             >
-              <MapPin className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-              <span className="text-sm text-gray-800 leading-tight">{loc.address}</span>
+              <MapPin className="w-4 h-4 text-white mt-0.5 shrink-0" />
+              <span className="text-sm text-zinc-200 leading-tight">{loc.address}</span>
             </button>
           ))}
         </div>
