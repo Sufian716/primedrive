@@ -46,10 +46,10 @@ export interface RideOption {
 }
 
 export const RIDE_OPTIONS: RideOption[] = [
-  { class: 'economy', name: 'Economy', description: 'Günstig & zuverlässig', icon: '🚗', basePrice: 25, pricePerKm: 1.8, maxPassengers: 4, eta: 5 },
-  { class: 'comfort', name: 'Comfort', description: 'Mehr Komfort & Platz', icon: '🚙', basePrice: 35, pricePerKm: 2.2, maxPassengers: 4, eta: 7 },
-  { class: 'xl', name: 'XL', description: 'Für Gruppen bis 6 Personen', icon: '🚐', basePrice: 45, pricePerKm: 2.8, maxPassengers: 6, eta: 10 },
-  { class: 'van', name: 'Van', description: 'Viel Gepäck? Kein Problem', icon: '🚌', basePrice: 55, pricePerKm: 3.2, maxPassengers: 8, eta: 15 },
+  { class: 'economy', name: 'Economy', description: 'Günstig & zuverlässig', icon: '🚗', basePrice: 25, pricePerKm: 3.0, maxPassengers: 4, eta: 5 },
+  { class: 'comfort', name: 'Comfort', description: 'Mehr Komfort & Platz', icon: '🚙', basePrice: 35, pricePerKm: 3.0, maxPassengers: 4, eta: 7 },
+  { class: 'xl', name: 'XL', description: 'Für Gruppen bis 6 Personen', icon: '🚐', basePrice: 45, pricePerKm: 3.0, maxPassengers: 6, eta: 10 },
+  { class: 'van', name: 'Van', description: 'Viel Gepäck? Kein Problem', icon: '🚌', basePrice: 55, pricePerKm: 3.0, maxPassengers: 8, eta: 15 },
 ]
 
 export const STATUS_LABELS: Record<BookingStatus, string> = {

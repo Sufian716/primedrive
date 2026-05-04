@@ -91,7 +91,7 @@ export default function BookingClient() {
           <>
             {pickup && dropoff ? <MapView pickup={pickup} dropoff={dropoff} height="200px" /> : <MapPlaceholder height="160px" />}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
-              <AddressInput label="Abholung" value={pickup} onChange={setPickup} placeholder="Abholadresse eingeben..." iconColor="text-green-500" />
+              <AddressInput label="Abholung" value={pickup} onChange={setPickup} placeholder="Abholadresse eingeben..." iconColor="text-green-500" showLocate />
               <div className="border-t border-dashed border-gray-200" />
               <AddressInput label="Ziel" value={dropoff} onChange={setDropoff} placeholder="Zieladresse eingeben..." iconColor="text-red-500" />
             </div>
