@@ -1,21 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useClerk } from '@clerk/nextjs'
 import { Car, Clock, CheckCircle, TrendingUp, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import type { Booking } from '@/types'
 import { STATUS_LABELS, STATUS_COLORS } from '@/types'
 
 export default function AdminDashboard() {
-  const router = useRouter()
+  const { signOut } = useClerk()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
 
-  const handleLogout = async () => {
-    await fetch('/api/admin/login', { method: 'DELETE' })
-    router.push('/admin/login')
-  }
+  const handleLogout = () => signOut({ redirectUrl: '/' })
 
   const load = () => {
     fetch('/api/admin/bookings')

@@ -23,7 +23,7 @@ services:
       - key: FROM_EMAIL
         value: onboarding@resend.dev
       - key: ADMIN_EMAIL
-        value: sbt2309@gmail.com
+        sync: false
       - key: NEXT_PUBLIC_APP_URL
         fromService:
           type: web
