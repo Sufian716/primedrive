@@ -1,7 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 
-const isAccountRoute = createRouteMatcher(['/account(.*)'])
+const isPublicRoute = createRouteMatcher([
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+])
 
 export const proxy = clerkMiddleware(async (auth, req: NextRequest) => {
   const { pathname } = req.nextUrl
@@ -21,14 +24,14 @@ export const proxy = clerkMiddleware(async (auth, req: NextRequest) => {
     const adminEmails = (process.env.ADMIN_EMAIL ?? '').split(',').map(e => e.trim()).filter(Boolean)
 
     if (!email || !adminEmails.includes(email)) {
-      return NextResponse.redirect(new URL('/?error=unauthorized', req.url))
+      return NextResponse.redirect(new URL('/', req.url))
     }
 
     return NextResponse.next()
   }
 
-  // Account page: require any Clerk login
-  if (isAccountRoute(req)) {
+  // All other routes require Clerk login (except sign-in/sign-up)
+  if (!isPublicRoute(req)) {
     await auth.protect()
   }
 })
