@@ -1,21 +1,29 @@
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'primedrive2024'
+const isAccountRoute = createRouteMatcher(['/account(.*)'])
 
-export function proxy(req: NextRequest) {
+export const proxy = clerkMiddleware(async (auth, req: NextRequest) => {
   const { pathname } = req.nextUrl
 
-  if (!pathname.startsWith('/admin')) return NextResponse.next()
-  if (pathname.startsWith('/admin/login')) return NextResponse.next()
+  // Admin: cookie-based password auth (separate from Clerk)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+    const session = req.cookies.get('admin_session')?.value
+    if (session !== ADMIN_PASSWORD) {
+      const url = req.nextUrl.clone()
+      url.pathname = '/admin/login'
+      return NextResponse.redirect(url)
+    }
+    return NextResponse.next()
+  }
 
-  const session = req.cookies.get('admin_session')?.value
-  if (session === ADMIN_PASSWORD) return NextResponse.next()
-
-  const loginUrl = req.nextUrl.clone()
-  loginUrl.pathname = '/admin/login'
-  return NextResponse.redirect(loginUrl)
-}
+  // Account page requires Clerk login
+  if (isAccountRoute(req)) {
+    await auth.protect()
+  }
+})
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon\\.ico|.*\\..*).*)'],
 }

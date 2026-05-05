@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useUser, useClerk } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Search, Shield, ChevronRight, Clock } from 'lucide-react'
+import { ArrowLeft, Search, Shield, ChevronRight, Clock, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { STATUS_LABELS, STATUS_COLORS } from '@/types'
 
@@ -19,6 +20,8 @@ interface SavedBooking {
 
 export default function AccountPage() {
   const router = useRouter()
+  const { user } = useUser()
+  const { signOut } = useClerk()
   const [bookingId, setBookingId] = useState('')
   const [recentBookings, setRecentBookings] = useState<SavedBooking[]>([])
 
@@ -26,7 +29,6 @@ export default function AccountPage() {
     try {
       const saved: SavedBooking[] = JSON.parse(localStorage.getItem('pd_bookings') ?? '[]')
       setRecentBookings(saved.slice(0, 5))
-      // Refresh statuses from API
       saved.slice(0, 5).forEach(b => {
         fetch(`/api/bookings/${b.id}`)
           .then(r => r.json())
@@ -47,9 +49,29 @@ export default function AccountPage() {
       <div className="bg-zinc-950 border-b border-zinc-800 px-4 py-3 flex items-center gap-3">
         <Link href="/" className="p-1"><ArrowLeft className="w-5 h-5 text-zinc-300" /></Link>
         <span className="font-semibold text-white">Konto</span>
+        <button
+          onClick={() => signOut({ redirectUrl: '/' })}
+          className="ml-auto flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors"
+        >
+          <LogOut className="w-3.5 h-3.5" />Abmelden
+        </button>
       </div>
 
       <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
+
+        {/* User profile */}
+        {user && (
+          <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 flex items-center gap-4">
+            {user.imageUrl
+              ? <img src={user.imageUrl} alt="" className="w-12 h-12 rounded-full object-cover" />
+              : <div className="w-12 h-12 rounded-full bg-zinc-700 flex items-center justify-center text-white text-lg font-bold">{user.firstName?.[0] ?? '?'}</div>
+            }
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-white truncate">{user.fullName ?? user.username ?? 'Nutzer'}</div>
+              <div className="text-xs text-zinc-500 truncate">{user.primaryEmailAddress?.emailAddress}</div>
+            </div>
+          </div>
+        )}
 
         {/* Recent bookings */}
         {recentBookings.length > 0 && (
@@ -62,9 +84,7 @@ export default function AccountPage() {
               <Link key={b.id} href={`/track/${b.id}`}
                 className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800 last:border-0 hover:bg-zinc-800 transition-colors">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white text-sm font-medium truncate">{b.dropoff}</span>
-                  </div>
+                  <div className="text-white text-sm font-medium truncate mb-0.5">{b.dropoff}</div>
                   <div className="flex items-center gap-2">
                     <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${STATUS_COLORS[b.status as keyof typeof STATUS_COLORS] ?? 'bg-zinc-700 text-zinc-300'}`}>
                       {STATUS_LABELS[b.status as keyof typeof STATUS_LABELS] ?? b.status}
@@ -105,16 +125,15 @@ export default function AccountPage() {
               <div className="font-semibold text-sm text-white">Admin-Dashboard</div>
               <div className="text-xs text-zinc-500">Fahrten verwalten</div>
             </div>
-            <span className="ml-auto text-zinc-600 text-lg">›</span>
+            <ChevronRight className="w-4 h-4 text-zinc-600 ml-auto" />
           </Link>
         </div>
 
         {/* Info */}
-        <div className="text-center pt-4">
+        <div className="text-center pt-2 pb-4">
           <div className="text-3xl mb-2">🚗</div>
           <div className="font-bold text-white">PrimeDrive</div>
           <div className="text-xs text-zinc-500">Dein Fahrservice Frankfurt</div>
-          <div className="text-xs text-zinc-700 mt-1">v1.0.0</div>
         </div>
       </div>
     </div>

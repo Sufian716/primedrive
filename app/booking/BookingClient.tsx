@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 import { AddressInput } from '@/components/booking/AddressInput'
 import { RideSelector } from '@/components/booking/RideSelector'
 import { MapView, MapPlaceholder } from '@/components/map/MapView'
@@ -16,6 +17,7 @@ const STEPS = ['Route', 'Details', 'Fahrzeug', 'Bezahlen', 'Bestätigung']
 export default function BookingClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { user } = useUser()
   const [step, setStep] = useState(0)
   const [pickup, setPickup] = useState<Location | null>(null)
   const [dropoff, setDropoff] = useState<Location | null>(null)
@@ -42,6 +44,13 @@ export default function BookingClient() {
     if (ft) setFlightTime(ft)
     if (type === 'airport') setDropoff({ ...FRANKFURT_AIRPORT })
   }, [searchParams])
+
+  useEffect(() => {
+    if (!user) return
+    if (!passengerName) setPassengerName(user.fullName ?? '')
+    if (!passengerEmail) setPassengerEmail(user.primaryEmailAddress?.emailAddress ?? '')
+    if (!passengerPhone) setPassengerPhone(user.phoneNumbers?.[0]?.phoneNumber ?? '')
+  }, [user])
 
   const distanceKm = pickup && dropoff ? calculateDistance(pickup.lat, pickup.lng, dropoff.lat, dropoff.lng) : 10
   const price = calculatePrice(rideClass, distanceKm)
