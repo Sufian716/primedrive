@@ -3,7 +3,7 @@ import { STATUS_LABELS } from '@/types'
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 const FROM_EMAIL = process.env.FROM_EMAIL ?? 'noreply@primedrive.de'
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@primedrive.de'
+const NOTIFY_EMAIL = process.env.RESEND_NOTIFY_EMAIL ?? process.env.NOTIFY_EMAIL ?? 'admin@primedrive.de'
 
 async function sendEmail(to: string, subject: string, html: string) {
   if (!RESEND_API_KEY) {
@@ -67,8 +67,8 @@ export async function sendBookingConfirmation(booking: Booking) {
     <a class="btn" href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://primedrive.de'}/track/${booking.id}">Fahrt verfolgen →</a>
   `)
 
-  const recipients = [ADMIN_EMAIL]
-  if (booking.passengerEmail !== ADMIN_EMAIL) {
+  const recipients = [NOTIFY_EMAIL]
+  if (booking.passengerEmail !== NOTIFY_EMAIL) {
     recipients.push(booking.passengerEmail)
   }
   await Promise.allSettled(

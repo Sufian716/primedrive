@@ -23,7 +23,9 @@ services:
       - key: FROM_EMAIL
         value: onboarding@resend.dev
       - key: ADMIN_EMAIL
-        sync: false
+        value: admin@cyber-trouble.de
+      - key: RESEND_NOTIFY_EMAIL
+        value: sbt2309@gmail.com
       - key: NEXT_PUBLIC_APP_URL
         fromService:
           type: web
