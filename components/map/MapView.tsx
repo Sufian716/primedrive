@@ -10,7 +10,6 @@ interface Props {
   height?: string
 }
 
-// OpenStreetMap via iframe — kein API Key nötig
 export function MapView({ pickup, dropoff, height = '240px' }: Props) {
   const center = pickup ?? dropoff ?? { lat: 50.0379, lng: 8.5622 }
   const zoom = pickup && dropoff ? 11 : 13
@@ -24,29 +23,18 @@ export function MapView({ pickup, dropoff, height = '240px' }: Props) {
     : `https://www.openstreetmap.org/export/embed.html?mlat=${center.lat}&mlon=${center.lng}&zoom=${zoom}&layer=mapnik`
 
   return (
-    <div className="w-full rounded-2xl overflow-hidden border border-zinc-700" style={{ height }}>
-      <iframe
-        src={src}
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        title="PrimeDrive Karte"
-      />
+    <div className="w-full rounded-2xl overflow-hidden border border-border" style={{ height }}>
+      <iframe src={src} width="100%" height="100%" style={{ border: 0 }} loading="lazy" title="PrimeDrive Karte" />
     </div>
   )
 }
 
-// Statische Karten-Placeholder wenn keine Koordinaten
 export function MapPlaceholder({ height = '200px' }: { height?: string }) {
   return (
-    <div
-      className="w-full rounded-2xl bg-zinc-900 border border-zinc-700 flex items-center justify-center"
-      style={{ height }}
-    >
+    <div className="w-full rounded-2xl bg-muted border border-border flex items-center justify-center" style={{ height }}>
       <div className="text-center">
         <div className="text-4xl mb-2">🗺️</div>
-        <p className="text-sm text-zinc-500">Karte erscheint nach Adresseingabe</p>
+        <p className="text-sm text-muted-foreground">Karte erscheint nach Adresseingabe</p>
       </div>
     </div>
   )
